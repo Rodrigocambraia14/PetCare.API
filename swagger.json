@@ -1,0 +1,548 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "petgoReminder API",
+    "description": "API que disponibiliza rotas de consulta, criação e edição de usuários, aumigos e rotinas de alimentação, consumida pela aplicação petgoReminderUI .",
+    "version": "1.0"
+  },
+  "basePath": "/api",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/add": {
+      "post": {
+        "summary": "Cria um novo usuário na base de dados",
+        "tags": [ "user" ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User object containing name, email, and password",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "O nome do usuário"
+                },
+                "email": {
+                  "type": "string",
+                  "description": "O e-mail do usuário"
+                },
+                "password": {
+                  "type": "string",
+                  "description": "A senha do usuário"
+                }
+              },
+              "required": [ "name", "email", "password" ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created - Successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request response - Alguns parâmetros não foram preenchidos corretamente!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "summary": "Valida e realiza login do usuário cadastrado",
+        "tags": [ "user" ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "E-mail e senha do usuário cadastrado",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "description": "O e-mail do usuário"
+                },
+                "password": {
+                  "type": "string",
+                  "description": "A senha do usuário"
+                }
+              },
+              "required": [ "email", "password" ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response - Usuário autenticado com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request response - Alguns parâmetros não foram preenchidos corretamente!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pet/add": {
+      "post": {
+        "summary": "Cria um novo aumigo na base de dados",
+        "tags": [ "pet" ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "pet",
+            "in": "body",
+            "description": "Informações a respeito do animal como cor, idade, raça, gênero, nome, etc.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "O nome do animal"
+                },
+                "color": {
+                  "type": "string",
+                  "description": "A cor do animal"
+                },
+                "age": {
+                  "type": "integer",
+                  "description": "A idade do animal"
+                },
+                "race": {
+                  "type": "string",
+                  "description": "A raça do animal"
+                },
+                "gender": {
+                  "type": "string",
+                  "description": "O gênero do animal [M] ou [F]"
+                },
+                "user_id": {
+                  "type": "string",
+                  "description": "O Id do usuário autenticado (dono do animal)"
+                }
+              },
+              "required": [ "name", "color", "age", "race", "gender", "user_id" ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created - Successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request response - Alguns parâmetros não foram preenchidos corretamente!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pet/list": {
+      "get": {
+        "summary": "Lista todos os aumigos do usuário",
+        "tags": [ "pet" ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "Id (chave primária) do usuário autenticado.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "O Id do usuário"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pet/update": {
+      "put": {
+        "summary": "Atualiza as informações de um aumigo",
+        "description": "Esta rota permite atualizar as informações de um aumigo existente.",
+        "tags": [ "pet" ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados do aumigo a serem atualizados",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Nome do aumigo"
+                },
+                "race": {
+                  "type": "string",
+                  "description": "Raça do aumigo"
+                },
+                "age": {
+                  "type": "integer",
+                  "description": "Idade do aumigo em anos"
+                },
+                "gender": {
+                  "type": "string",
+                  "description": "Gênero do aumigo (Macho/Fêmea)"
+                },
+                "color": {
+                  "type": "string",
+                  "description": "Cor do aumigo"
+                },
+                "user_id": {
+                  "type": "integer",
+                  "description": "ID do usuário proprietário do aumigo"
+                },
+                "pet_id": {
+                  "type": "integer",
+                  "description": "ID único do aumigo a ser atualizado"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Mensagem de sucesso"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string",
+                  "description": "Descrição do erro"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pet/delete": {
+      "post": {
+        "summary": "Remove um aumigo da base de dados",
+        "produces": [ "application/json" ],
+        "tags": [ "pet" ],
+        "parameters": [
+          {
+            "name": "pet_id",
+            "in": "body",
+            "description": "O ID do aumigo a ser removido",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pet_id": {
+                  "type": "string",
+                  "description": "O ID do aumigo"
+                }
+              },
+              "required": [ "pet_id" ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response - O aumigo foi removido com sucesso.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request response - Alguns parâmetros não foram preenchidos corretamente!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/food_routine/get_notifications": {
+      "get": {
+        "summary": "Obter notificações de rotinas alimentares",
+        "description": "Retorna as notificações de rotinas alimentares para o usuário especificado.",
+        "tags": [ "food routines" ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "ID do usuário para o qual deseja-se obter as notificações",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação bem-sucedida. Retorna as notificações de rotinas alimentares.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FoodRoutineNotificationDTO"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida. O ID do usuário é obrigatório."
+          }
+        }
+      }
+    },
+    "/food_routine/list": {
+      "get": {
+        "summary": "Listar rotinas",
+        "description": "Retorna a lista de rotinas de alimentação de acordo com o usuário especificado.",
+        "tags": [ "food routines" ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "ID do usuário para o qual deseja-se obter as rotinas",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operação bem-sucedida. Retorna a lista de rotinas do usuário autenticado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FoodRoutineDTO"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida. O ID do usuário é obrigatório."
+          }
+        }
+      }
+    },
+    "/food_routine/add": {
+      "post": {
+        "summary": "Adicionar rotina de alimentação para um aumigo",
+        "description": "Adiciona uma nova rotina alimentar de acordo com o usuário especificado.",
+        "tags": [ "food routines" ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddFoodRoutineRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Rotina adicionada com sucesso."
+          },
+          "400": {
+            "description": "Requisição inválida. Alguns parâmetros não foram preenchidos corretamente."
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "pet",
+      "description": "Operações relacionadas a aumigos"
+    },
+    {
+      "name": "user",
+      "description": "Operações relacionadas a usuários"
+    },
+    {
+      "name": "food routines",
+      "description": "Operações relacionadas a rotinas de alimentação"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "FoodRoutineNotificationDTO": {
+        "type": "object",
+        "properties": {
+          "notification_id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "pet_id": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "time": {
+            "type": "string"
+          }
+        }
+      },
+      "FoodRoutineDTO": {
+        "type": "object",
+        "properties": {
+          "routine_id": {
+            "type": "string"
+          },
+          "user_id": {
+            "type": "string"
+          },
+          "pet_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "portions": {
+            "type": "integer"
+          }
+        }
+      },
+      "AddFoodRoutineRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "portions": {
+            "type": "integer"
+          },
+          "pet_id": {
+            "type": "string"
+          },
+          "portion_details": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "grams": {
+                  "type": "integer"
+                },
+                "feed_time": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
