@@ -21,7 +21,6 @@ class BaseSetup(ABC):
     CREATE TABLE IF NOT EXISTS {} (
         id TEXT PRIMARY KEY,
         name TEXT,
-        race TEXT,
         age INTEGER,
         gender TEXT,
         color TEXT,

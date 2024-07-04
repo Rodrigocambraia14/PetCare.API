@@ -7,12 +7,11 @@ from model.common.entity import Entity
 from utils.helper import Helper
 from infrastructure.database.constants import *
 
-class pet(Entity):
+class Pet(Entity):
 
-    def __init__(self, new_id, name, race, age, gender, color, user_id):
+    def __init__(self, new_id, name,  age, gender, color, user_id):
         self.id = new_id
         self.name = name
-        self.race = race
         self.age = age
         self.color = color
         self.gender = gender
@@ -23,7 +22,7 @@ class pet(Entity):
     
     def update(self):
         
-        updated_pet = petDTO(self.id, self.name, self.race, self.age, self.gender, self.color, self.user_id)  
+        updated_pet = petDTO(self.id, self.name, self.age, self.gender, self.color, self.user_id)  
         
         petSetup.update(updated_pet)
 

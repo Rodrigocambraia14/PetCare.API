@@ -21,7 +21,7 @@ class petSetup(BaseSetup):
         pets = [] 
 
         for row in rows:
-            pet = petDTO(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+            pet = petDTO(row[0], row[1], row[2], row[3], row[4], row[5])
             pets.append(pet.to_dict())
             
         BaseSetup.close(conn)
@@ -48,9 +48,9 @@ class petSetup(BaseSetup):
     
         cur = conn.cursor()
     
-        query = "UPDATE {} SET name = ?, race = ?, age = ?, gender = ?, color = ? WHERE id = ?".format(pet_TABLE)
+        query = "UPDATE {} SET name = ?, age = ?, gender = ?, color = ? WHERE id = ?".format(pet_TABLE)
     
-        values = (updated_pet.name, updated_pet.race, updated_pet.age, updated_pet.gender, updated_pet.color, updated_pet.id)
+        values = (updated_pet.name, updated_pet.age, updated_pet.gender, updated_pet.color, updated_pet.id)
     
         cur.execute(query, values)
 

@@ -1,4 +1,4 @@
-from model.entities.pet import pet
+from model.entities.pet import Pet
 from utils.helper import Helper
 from flask import Blueprint, jsonify, request
 from model.entities.user import User
@@ -9,18 +9,17 @@ pet_controller = Blueprint('pet_controller', __name__)
 @pet_controller.route("/pet/add", methods=['POST'])
 def pet_add():
     
-    required_params = ['name', 'race', 'age', 'gender', 'color', 'user_id']
+    required_params = ['name', 'age', 'gender', 'color', 'user_id']
     if not all(param in request.json for param in required_params):
         return jsonify({'error': 'Alguns parametros nao foram preenchidos corretamente!'}), 400
 
     name = request.json['name']
-    race = request.json['race']
     age = request.json['age']
     gender = request.json['gender']
     color = request.json['color']
     user_id = request.json['user_id']
     
-    pet = pet(Helper.get_new_id(), name, race, age, gender, color, user_id)
+    pet = Pet(Helper.get_new_id(), name, age, gender, color, user_id)
     
     pet.add()
 
@@ -29,19 +28,18 @@ def pet_add():
 @pet_controller.route("/pet/update", methods=['PUT'])
 def pet_update():
     
-    required_params = ['name', 'race', 'age', 'gender', 'color', 'user_id', 'pet_id']
+    required_params = ['name', 'age', 'gender', 'color', 'user_id', 'pet_id']
     if not all(param in request.json for param in required_params):
         return jsonify({'error': 'Alguns parametros nao foram preenchidos corretamente!'}), 400
 
     name = request.json['name']
-    race = request.json['race']
     age = request.json['age']
     gender = request.json['gender']
     color = request.json['color']
     user_id = request.json['user_id']
     pet_id = request.json['pet_id']
     
-    pet = pet(pet_id, name, race, age, gender, color, user_id)
+    pet = Pet(pet_id, name, age, gender, color, user_id)
     
     pet.update()
 
@@ -56,7 +54,7 @@ def pet_delete():
 
     pet_id = request.json['pet_id']
     
-    pet.delete(pet_id)
+    Pet.delete(pet_id)
     
     return jsonify({'message': 'Pet removido com sucesso.'}), 200
 
@@ -67,6 +65,6 @@ def pet_list():
     if not user_id:
         return jsonify({'error': 'O ID do usuario e obrigatorio.'}), 400
     
-    pets = pet.list(user_id)
+    pets = Pet.list(user_id)
     
     return jsonify(pets), 200

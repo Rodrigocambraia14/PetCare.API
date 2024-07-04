@@ -1,7 +1,7 @@
 import sqlite3, datetime
 from infrastructure.database.constants import DB_NAME
 from model.entities.user import User
-from model.entities.pet import pet
+from model.entities.pet import Pet
 from model.entities.food_routine import FoodRoutine
 from model.entities.portion_detail import PortionDetail
 from utils.helper import Helper
@@ -15,7 +15,7 @@ class Seed:
         user = User(Helper.get_new_id(), 'PUC RIO', 'tester@PUCRIO.com', 'PUC@123')
         user.add()
      
-        pet = pet(Helper.get_new_id(), 'Abigail', 'Beagle', 1, 'F', 'Tricolor', user.id)
+        pet = Pet(Helper.get_new_id(), 'Abigail', 1, 'F', 'Tricolor', user.id)
         pet.add()
         
         food_routine = FoodRoutine(Helper.get_new_id(), 'alimentacao Abigail', 3, pet.id)

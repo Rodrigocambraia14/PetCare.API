@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "petgoReminder API",
-    "description": "API que disponibiliza rotas de consulta, criação e edição de usuários, aumigos e rotinas de alimentação, consumida pela aplicação petgoReminderUI .",
+    "title": "petCare API",
+    "description": "API que disponibiliza rotas de consulta, criação e edição de usuários, pets e rotinas de alimentação, consumida pela aplicação petCareUI .",
     "version": "1.0"
   },
   "basePath": "/api",
@@ -132,7 +132,7 @@
     },
     "/pet/add": {
       "post": {
-        "summary": "Cria um novo aumigo na base de dados",
+        "summary": "Cria um novo pet na base de dados",
         "tags": [ "pet" ],
         "produces": [
           "application/json"
@@ -141,7 +141,7 @@
           {
             "name": "pet",
             "in": "body",
-            "description": "Informações a respeito do animal como cor, idade, raça, gênero, nome, etc.",
+            "description": "Informações a respeito do animal como cor, idade,  gênero, nome, etc.",
             "required": true,
             "schema": {
               "type": "object",
@@ -158,10 +158,6 @@
                   "type": "integer",
                   "description": "A idade do animal"
                 },
-                "race": {
-                  "type": "string",
-                  "description": "A raça do animal"
-                },
                 "gender": {
                   "type": "string",
                   "description": "O gênero do animal [M] ou [F]"
@@ -171,7 +167,7 @@
                   "description": "O Id do usuário autenticado (dono do animal)"
                 }
               },
-              "required": [ "name", "color", "age", "race", "gender", "user_id" ]
+              "required": [ "name", "color", "age",  "gender", "user_id" ]
             }
           }
         ],
@@ -203,7 +199,7 @@
     },
     "/pet/list": {
       "get": {
-        "summary": "Lista todos os aumigos do usuário",
+        "summary": "Lista todos os pets do usuário",
         "tags": [ "pet" ],
         "produces": [
           "application/json"
@@ -237,45 +233,41 @@
     },
     "/pet/update": {
       "put": {
-        "summary": "Atualiza as informações de um aumigo",
-        "description": "Esta rota permite atualizar as informações de um aumigo existente.",
+        "summary": "Atualiza as informações de um pet",
+        "description": "Esta rota permite atualizar as informações de um pet existente.",
         "tags": [ "pet" ],
         "parameters": [
           {
             "name": "body",
             "in": "body",
-            "description": "Dados do aumigo a serem atualizados",
+            "description": "Dados do pet a serem atualizados",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "name": {
                   "type": "string",
-                  "description": "Nome do aumigo"
-                },
-                "race": {
-                  "type": "string",
-                  "description": "Raça do aumigo"
+                  "description": "Nome do pet"
                 },
                 "age": {
                   "type": "integer",
-                  "description": "Idade do aumigo em anos"
+                  "description": "Idade do pet em anos"
                 },
                 "gender": {
                   "type": "string",
-                  "description": "Gênero do aumigo (Macho/Fêmea)"
+                  "description": "Gênero do pet (Macho/Fêmea)"
                 },
                 "color": {
                   "type": "string",
-                  "description": "Cor do aumigo"
+                  "description": "Cor do pet"
                 },
                 "user_id": {
                   "type": "integer",
-                  "description": "ID do usuário proprietário do aumigo"
+                  "description": "ID do usuário proprietário do pet"
                 },
                 "pet_id": {
                   "type": "integer",
-                  "description": "ID único do aumigo a ser atualizado"
+                  "description": "ID único do pet a ser atualizado"
                 }
               }
             }
@@ -311,21 +303,21 @@
     },
     "/pet/delete": {
       "post": {
-        "summary": "Remove um aumigo da base de dados",
+        "summary": "Remove um pet da base de dados",
         "produces": [ "application/json" ],
         "tags": [ "pet" ],
         "parameters": [
           {
             "name": "pet_id",
             "in": "body",
-            "description": "O ID do aumigo a ser removido",
+            "description": "O ID do pet a ser removido",
             "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "pet_id": {
                   "type": "string",
-                  "description": "O ID do aumigo"
+                  "description": "O ID do pet"
                 }
               },
               "required": [ "pet_id" ]
@@ -334,7 +326,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response - O aumigo foi removido com sucesso.",
+            "description": "Successful response - O pet foi removido com sucesso.",
             "schema": {
               "type": "object",
               "properties": {
@@ -432,7 +424,7 @@
     },
     "/food_routine/add": {
       "post": {
-        "summary": "Adicionar rotina de alimentação para um aumigo",
+        "summary": "Adicionar rotina de alimentação para um pet",
         "description": "Adiciona uma nova rotina alimentar de acordo com o usuário especificado.",
         "tags": [ "food routines" ],
         "requestBody": {
@@ -459,7 +451,7 @@
   "tags": [
     {
       "name": "pet",
-      "description": "Operações relacionadas a aumigos"
+      "description": "Operações relacionadas a pets"
     },
     {
       "name": "user",
