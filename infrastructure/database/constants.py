@@ -1,5 +1,6 @@
 DB_NAME = 'pet-care.db'
 pet_TABLE = 'pets'
+VACCINE_CALENDAR_TABLE = 'vaccine_calendars'
 USER_TABLE = 'users'
 FOOD_ROUTINE_TABLE = 'food_routines'
 PORTION_DETAIL_TABLE = 'portion_details'

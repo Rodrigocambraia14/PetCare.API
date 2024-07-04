@@ -1,10 +1,13 @@
 import sqlite3, datetime
+from xmlrpc.client import DateTime
 from infrastructure.database.constants import DB_NAME
 from model.entities.user import User
 from model.entities.pet import Pet
 from model.entities.food_routine import FoodRoutine
 from model.entities.portion_detail import PortionDetail
+from model.entities.vaccine_calendar import VaccineCalendar
 from utils.helper import Helper
+from datetime import datetime
 
 class Seed:
     
@@ -17,6 +20,9 @@ class Seed:
      
         pet = Pet(Helper.get_new_id(), 'Abigail', 1, 'F', 'Tricolor', user.id)
         pet.add()
+        
+        date = VaccineCalendar(Helper.get_new_id(), datetime.now(), 'Vacina contra raiva - 1 dose', user.id)
+        date.add()
         
         food_routine = FoodRoutine(Helper.get_new_id(), 'alimentacao Abigail', 3, pet.id)
         food_routine.add()

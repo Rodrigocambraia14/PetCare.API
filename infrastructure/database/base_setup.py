@@ -32,6 +32,16 @@ class BaseSetup(ABC):
         cur.execute("""
     CREATE TABLE IF NOT EXISTS {} (
         id TEXT PRIMARY KEY,
+        date DATE,
+        description TEXT,
+        user_id TEXT,
+        FOREIGN KEY (user_id) REFERENCES {}(id)
+    )
+""".format(VACCINE_CALENDAR_TABLE, USER_TABLE))
+        
+        cur.execute("""
+    CREATE TABLE IF NOT EXISTS {} (
+        id TEXT PRIMARY KEY,
         name TEXT,
         portions INTEGER,
         pet_id TEXT,
