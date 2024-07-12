@@ -45,4 +45,4 @@ if not os.path.isfile(DB_NAME):
     BaseSetup.create_tables()
     Seed.run_database_seeding()
     
-app.run()
+app.run(host="0.0.0.0", port=5000)

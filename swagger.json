@@ -167,7 +167,7 @@
                   "description": "O Id do usuário autenticado (dono do animal)"
                 }
               },
-              "required": [ "name", "color", "age",  "gender", "user_id" ]
+              "required": [ "name", "color", "age", "gender", "user_id" ]
             }
           }
         ],
@@ -302,7 +302,7 @@
       }
     },
     "/pet/delete": {
-      "post": {
+      "delete": {
         "summary": "Remove um pet da base de dados",
         "produces": [ "application/json" ],
         "tags": [ "pet" ],
@@ -350,99 +350,124 @@
         }
       }
     },
-    "/food_routine/get_notifications": {
-      "get": {
-        "summary": "Obter notificações de rotinas alimentares",
-        "description": "Retorna as notificações de rotinas alimentares para o usuário especificado.",
-        "tags": [ "food routines" ],
-        "parameters": [
-          {
-            "name": "user_id",
-            "in": "query",
-            "description": "ID do usuário para o qual deseja-se obter as notificações",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Operação bem-sucedida. Retorna as notificações de rotinas alimentares.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FoodRoutineNotificationDTO"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Requisição inválida. O ID do usuário é obrigatório."
-          }
-        }
-      }
-    },
-    "/food_routine/list": {
-      "get": {
-        "summary": "Listar rotinas",
-        "description": "Retorna a lista de rotinas de alimentação de acordo com o usuário especificado.",
-        "tags": [ "food routines" ],
-        "parameters": [
-          {
-            "name": "user_id",
-            "in": "query",
-            "description": "ID do usuário para o qual deseja-se obter as rotinas",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Operação bem-sucedida. Retorna a lista de rotinas do usuário autenticado.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FoodRoutineDTO"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Requisição inválida. O ID do usuário é obrigatório."
-          }
-        }
-      }
-    },
-    "/food_routine/add": {
+    "/vaccine_calendar/add": {
       "post": {
-        "summary": "Adicionar rotina de alimentação para um pet",
-        "description": "Adiciona uma nova rotina alimentar de acordo com o usuário especificado.",
-        "tags": [ "food routines" ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddFoodRoutineRequest"
-              }
+        "summary": "Adiciona uma nova data de vacina ao calendário",
+        "tags": [ "vaccine_calendar" ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados da nova vacina a ser adicionada",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "description": "A data da vacina"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Descrição da vacina"
+                },
+                "user_id": {
+                  "type": "string",
+                  "description": "ID do usuário proprietário"
+                }
+              },
+              "required": [ "date", "description", "user_id" ]
             }
           }
-        },
+        ],
         "responses": {
           "201": {
-            "description": "Rotina adicionada com sucesso."
+            "description": "Created - Successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "400": {
-            "description": "Requisição inválida. Alguns parâmetros não foram preenchidos corretamente."
+            "description": "Bad request response - Alguns parâmetros não foram preenchidos corretamente!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vaccine_calendar/update": {
+      "put": {
+        "summary": "Atualiza uma data de vacina existente no calendário",
+        "tags": [ "vaccine_calendar" ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Dados da vacina a serem atualizados",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "description": "A data da vacina"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Descrição da vacina"
+                },
+                "user_id": {
+                  "type": "string",
+                  "description": "ID do usuário proprietário"
+                },
+                "vaccine_calendar_id": {
+                  "type": "string",
+                  "description": "ID da data selecionada"
+                }
+              },
+              "required": [ "date", "description", "user_id", "vaccine_calendar_id" ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request response - Alguns parâmetros não foram preenchidos corretamente!",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       }
@@ -458,8 +483,8 @@
       "description": "Operações relacionadas a usuários"
     },
     {
-      "name": "food routines",
-      "description": "Operações relacionadas a rotinas de alimentação"
+      "name": "vaccine_calendar",
+      "description": "Operações relacionadas ao calendario de vacinação"
     }
   ],
   "components": {
@@ -481,26 +506,6 @@
           },
           "time": {
             "type": "string"
-          }
-        }
-      },
-      "FoodRoutineDTO": {
-        "type": "object",
-        "properties": {
-          "routine_id": {
-            "type": "string"
-          },
-          "user_id": {
-            "type": "string"
-          },
-          "pet_id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "portions": {
-            "type": "integer"
           }
         }
       },

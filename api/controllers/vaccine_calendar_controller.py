@@ -41,7 +41,7 @@ def vaccine_calendar_update():
 
     return jsonify({'message': 'Data atualizada com sucesso.'}), 200
 
-@vaccine_calendar_controller.route("/vaccine_calendar/delete", methods=['POST'])
+@vaccine_calendar_controller.route("/vaccine_calendar/delete", methods=['DELETE'])
 def vaccine_calendar_delete():
     
     required_params = ['vaccine_calendar_id']

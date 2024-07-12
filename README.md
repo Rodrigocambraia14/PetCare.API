@@ -2,7 +2,7 @@
 
 ## Descrição da Aplicação
 
-Esta é uma API em Python Flask que permite aos usuários registrar seus pets, criar rotinas de alimentação e receber notificações para alimentar seus pets em horários específicos. A API utiliza o Swagger para documentação e teste de endpoints.
+Esta é uma API em Python Flask que permite aos usuários registrar seus pets, gerenciar seu calendário de vacinação e ver curiosidades. A API utiliza o Swagger para documentação e teste de endpoints.
 
 ## Como Executar
 
@@ -11,13 +11,13 @@ Esta é uma API em Python Flask que permite aos usuários registrar seus pets, c
 2. Clone este repositório para o seu ambiente local:
 
     ```
-    git clone https://github.com/Rodrigocambraia14/petgoReminder.API.git
+    git clone https://github.com/Rodrigocambraia14/PetCare.API.git
     ```
 
 3. Navegue até o diretório do projeto:
 
     ```
-    cd petgoReminder.API
+    cd PetCare.API
     ```
 
 . Ative o ambiente virtual:
@@ -66,8 +66,27 @@ Werkzeug==3.0.1
 
 1. Autentique utilizando o usuário da seed: tester@PUCRIO.com e a senha: PUC@123
 1. Registre um pet utilizando o endpoint **POST /pets/add**.
-2. Crie uma rotina de alimentação para o pet utilizando o endpoint **POST /food_routines/add_**.
-3. Receba notificações para alimentar o pet nos horários especificados utilizando o endpoint **GET /food_routine/get_notifications**, ou utilizando o front PetCareUI.
+2. Cadastre um evento no calendário de vacinação utilizando o endpoint **POST /vaccine_calendar/add_**.
+
+## Executando com Docker
+Para facilitar o processo de configuração e execução do projeto, você pode usar o Docker. Siga os passos abaixo para rodar a aplicação com Docker:
+
+### Passo 1: Criar imagem
+Execute o seguinte comando na raiz do projeto:
+
+```sh
+docker build -t python-docker .
+```
+
+### Passo 2: Execute o container docker utilizando a imagem criada anteriormente
+
+```sh
+docker run -p 5001:5000 python-docker
+```
+
+### Acesse  a aplicação no endereço disponibilizado
+
+http://localhost:5001
 
 ## Licença
 
